@@ -8,7 +8,6 @@ export class OutboundCallService {
 
   async geminiApiCall() {
     const configService = new ConfigService();
-    console.log('Gemini API Key:', configService.get<string>('GEMINI_API_KEY'));
     const ai = new GoogleGenAI({
       apiKey: configService.get<string>('GEMINI_API_KEY'),
     });
