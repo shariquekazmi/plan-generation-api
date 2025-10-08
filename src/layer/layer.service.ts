@@ -59,12 +59,9 @@ export class LayerService {
     content: string,
     action: 'edit' | 'confirm',
   ) {
-    console.log(user);
     const layer = await this.layerModel.findById(layerId);
-    console.log('Layer found:', layer);
     if (!layer) throw new NotFoundException('Layer not found');
     const ownerId = user._id || user.userId;
-    console.log('Owner ID:', ownerId);
     if (layer.userId.toString() !== ownerId.toString())
       throw new ForbiddenException();
 
@@ -72,7 +69,6 @@ export class LayerService {
     layer.messages.push({ sender: 'user', content, createdAt: new Date() });
 
     if (action === 'confirm') {
-      console.log('User confirmed the prompt.');
       // User approves final prompt
       layer.finalPrompt = content || layer.initialPrompt;
       layer.readyForGeneration = true;
